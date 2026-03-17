@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيدك بصحة واتزان | د. دنيا</title>
+    
+    <!-- Google Fonts: Tajawal for clean Arabic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration matching Brand Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#1e3046',      /* الكحلي الداكن من الشعار */
+                        teal: '#51b2aa',      /* الفيروزي من الشعار */
+                        tealLight: '#eaf5f4', /* فيروزي فاتح للخلفيات */
+                        warning: '#e07a5f',   /* أحمر هادئ للتحذيرات */
+                        warningLight: '#fdf3f0',
+                        bgSoft: '#f8fafc'     /* خلفية مريحة للعين */
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e3046;
+        }
+
+        /* Custom Checkbox Styling */
+        .task-checkbox {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: #51b2aa;
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 0.35rem;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            flex-shrink: 0;
+        }
+
+        .task-checkbox::before {
+            content: "";
+            width: 0.8rem;
+            height: 0.8rem;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            background-color: white;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        .task-checkbox:checked {
+            background-color: #51b2aa;
+            border-color: #51b2aa;
+        }
+
+        .task-checkbox:checked::before {
+            transform: scale(1);
+        }
+
+        .task-text {
+            transition: color 0.3s ease;
+        }
+
+        /* Strikethrough effect when checked */
+        .task-label:has(input:checked) .task-text {
+            color: #94a3b8;
+            text-decoration: line-through;
+            text-decoration-color: #51b2aa;
+            text-decoration-thickness: 2px;
+        }
+
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Progress Bar */
+        #progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: #e2e8f0;
+            z-index: 50;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background-color: #51b2aa;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        /* Floating pattern for Hero */
+        .hero-pattern {
+            background-image: radial-gradient(#51b2aa 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+
+        /* --- NEW PREMIUM FEATURES STYLES --- */
+        /* Root Background Pattern (Inspired by Logo Roots) */
+        .root-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 0 Q 20 20 10 40 T 20 80 T 10 100 M 50 0 Q 60 30 40 50 T 60 90 T 50 100 M 90 0 Q 80 25 95 50 T 80 85 T 90 100' fill='none' stroke='%231e3046' stroke-width='0.7' opacity='0.04'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+        }
+
+        /* Animations */
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0; /* Starts hidden, animation reveals it */
+        }
+        
+        /* Water Glass Styling */
+        .water-glass {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: #cbd5e1;
+        }
+        .water-glass.filled {
+            color: #51b2aa;
+            transform: scale(1.15) translateY(-3px);
+            filter: drop-shadow(0 4px 6px rgba(81, 178, 170, 0.3));
+        }
+        
+        /* WhatsApp Button Pulse */
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .btn-whatsapp:hover {
+            animation: pulse-soft 2s infinite;
+        }
+    </style>
+</head>
+<body class="antialiased relative pb-16 root-bg">
+
+    <!-- Progress Bar -->
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative bg-navy text-white overflow-hidden rounded-b-[3rem] shadow-lg mb-10">
+        <div class="hero-pattern absolute inset-0"></div>
+        <div class="relative max-w-3xl mx-auto px-6 py-16 text-center z-10">
+            <!-- Leaf Icon representing functional medicine/growth -->
+            <div class="w-16 h-16 mx-auto bg-teal rounded-full flex items-center justify-center mb-6 shadow-lg transform hover:scale-110 transition-transform">
+                <i class="fa-solid fa-leaf text-3xl text-white"></i>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+                عيدك بصحة <span class="text-teal">واتزان</span>
+            </h1>
+            <p class="text-lg md:text-xl text-tealLight opacity-90 mb-2 font-medium">
+                دليل المهام اليومي لضمان كفاءة عمليات الأيض وراحة الجهاز الهضمي
+            </p>
+            <p class="text-sm md:text-base text-gray-300 font-light max-w-xl mx-auto mt-4">
+                رحلة ممتعة نحو التشافي والاحتفال بوعي، خطوة بخطوة.. اجعل هذه القائمة رفيقك اليومي.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content: Timeline / Checklist -->
+    <main class="max-w-2xl mx-auto px-4">
+
+        <!-- NEW: Premium Trackers (Water & Walk) -->
+        <section class="mb-10 bg-white p-6 rounded-3xl shadow-lg border border-tealLight animate-slide-up" style="animation-delay: 0.1s;">
+            <h2 class="text-xl font-bold text-navy mb-5 flex items-center gap-2 border-b border-gray-100 pb-3">
+                <i class="fa-solid fa-chart-pie text-teal"></i>
+                متتبعات الصحة اليومية
+            </h2>
+            
+            <!-- Water Tracker -->
+            <div class="mb-6">
+                <div class="flex justify-between items-end mb-3">
+                    <h3 class="font-bold text-navy text-base flex items-center gap-2">
+                        <i class="fa-solid fa-droplet text-teal"></i>
+                        عداد شرب الماء (8 أكواب)
+                    </h3>
+                    <span id="water-count-text" class="text-sm font-bold text-teal bg-tealLight px-2 py-1 rounded-md shadow-sm">0/8</span>
+                </div>
+                <div class="flex justify-between items-center bg-bgSoft p-4 rounded-2xl border border-gray-100" id="water-tracker">
+                    <!-- 8 Glasses -->
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="1"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="2"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="3"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="4"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="5"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="6"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="7"></i>
+                    <i class="fa-solid fa-glass-water text-3xl cursor-pointer water-glass" data-index="8"></i>
+                </div>
+            </div>
+
+            <!-- Walk Tracker -->
+            <div>
+                <h3 class="font-bold text-navy text-base flex items-center gap-2 mb-3">
+                    <i class="fa-solid fa-person-walking text-teal"></i>
+                    مؤشر المشي بعد الوجبة (15 دقيقة)
+                </h3>
+                <label class="flex items-center justify-between bg-bgSoft p-4 rounded-2xl border border-gray-100 cursor-pointer hover:bg-tealLight transition-colors shadow-sm">
+                    <span class="text-gray-700 font-bold text-sm">هل أكملت مشي الـ 15 دقيقة اليوم؟</span>
+                    <div class="relative">
+                        <input type="checkbox" id="walk-checkbox" class="sr-only peer">
+                        <div class="block bg-gray-300 w-14 h-8 rounded-full peer-checked:bg-teal transition-colors duration-300 shadow-inner"></div>
+                        <div class="dot absolute right-1 top-1 bg-white w-6 h-6 rounded-full peer-checked:-translate-x-6 transition-transform duration-300 shadow-md"></div>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Section 1: Morning -->
+        <section class="mb-10 relative">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-sun text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-navy">أولاً: الروتين الصباحي</h2>
+                <span class="text-sm text-teal font-bold bg-tealLight px-3 py-1 rounded-full mr-auto">الاستعداد</span>
+            </div>
+            
+            <div class="space-y-3 pl-4 border-r-2 border-tealLight pr-6 mr-5">
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">كوب الإنعاش الأيضي</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">شرب كوب ماء فاتر مع ملعقة صغيرة خل تفاح عضوي (لتهيئة حمض المعدة للهضم).</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">تأمين الأنسولين</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">تناول فطور غني بالبروتين والدهون الصحية (بيض، جبن طبيعي، زيت زيتون) قبل البدء في تناول أي حلويات.</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">ترطيب وقائي</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">شرب 500 مل من الماء قبل الخروج للزيارات العائلية.</p>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Section 2: Meals -->
+        <section class="mb-10 relative">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-utensils text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-navy">ثانياً: الوجبات الرئيسية</h2>
+                <span class="text-sm text-teal font-bold bg-tealLight px-3 py-1 rounded-full mr-auto">الذكاء الهضمي</span>
+            </div>
+            
+            <div class="space-y-3 pl-4 border-r-2 border-tealLight pr-6 mr-5">
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">تطبيق "قاعدة الترتيب"</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">البدء بالسلطة/الخضروات، ثم البروتين، وترك الكربوهيدرات للأخير.</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">تفعيل الإنزيمات</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">مضغ كل لقمة 20 مرة على الأقل (المضغ الجيد يقلل الانتفاخ فوراً).</p>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Section 3: Sweets -->
+        <section class="mb-10 relative">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-candy-cane text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-navy">ثالثاً: حلويات العيد</h2>
+                <span class="text-sm text-teal font-bold bg-tealLight px-3 py-1 rounded-full mr-auto">الاستمتاع الواعي</span>
+            </div>
+            
+            <div class="space-y-3 pl-4 border-r-2 border-tealLight pr-6 mr-5">
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">توقيت التحلية</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">تناول قطعة الحلوى بعد الوجبة الرئيسية مباشرة وليس على معدة فارغة.</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">حماية الألياف</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">تناول 5-7 حبات لوز أو جوز قبل قطعة الحلوى لتقليل طفرة السكر في الدم.</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">قاعدة "الثلاث لقمات"</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">الاستمتاع بأول 3 لقمات بتركيز وتوقف بعدها (هي الأقوى تأثيراً في مراكز المكافأة بالدماغ).</p>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Section 4: Activity -->
+        <section class="mb-10 relative">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-person-walking text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-navy">رابعاً: النشاط والترطيب</h2>
+                <span class="text-sm text-teal font-bold bg-tealLight px-3 py-1 rounded-full mr-auto">الحركة دواء</span>
+            </div>
+            
+            <div class="space-y-3 pl-4 border-r-2 border-tealLight pr-6 mr-5">
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">مشية الـ 15 دقيقة</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">مشي خفيف بعد وجبتي الغداء والعشاء (لتحفيز الحرق وتقليل الجلوكوز).</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">قاعدة الـ 2:1 للقهوة</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">مقابل كل فنجان قهوة/شاي، شرب كوبين من الماء لمنع الجفاف.</p>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Section 5: Evening -->
+        <section class="mb-12 relative">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="bg-teal text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-moon text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-navy">خامساً: روتين المساء</h2>
+                <span class="text-sm text-teal font-bold bg-tealLight px-3 py-1 rounded-full mr-auto">الاستشفاء</span>
+            </div>
+            
+            <div class="space-y-3 pl-4 border-r-2 border-tealLight pr-6 mr-5">
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">إغلاق المطبخ</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">التوقف عن الأكل تماماً قبل النوم بــ 3 - 4 ساعات على الأقل.</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">مساعد الهضم المسائي</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">شرب كوب من الزنجبيل أو النعناع لتهدئة القولون.</p>
+                    </div>
+                </label>
+                <!-- Task -->
+                <label class="task-label task-card flex items-start gap-4 bg-white p-4 rounded-xl border border-gray-100 shadow-sm transition-all cursor-pointer">
+                    <input type="checkbox" class="task-checkbox mt-1">
+                    <div>
+                        <h3 class="font-bold text-navy text-lg">المغنيسيوم</h3>
+                        <p class="task-text text-gray-600 text-sm mt-1">تناول مكمل المغنيسيوم (إذا كان ضمن خطتك) للمساعدة على الاسترخاء وجودة النوم.</p>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <!-- Visual Divider -->
+        <div class="flex items-center justify-center gap-2 mb-10 opacity-50">
+            <div class="w-16 h-px bg-teal"></div>
+            <i class="fa-solid fa-leaf text-teal text-sm"></i>
+            <div class="w-16 h-px bg-teal"></div>
+        </div>
+
+        <!-- Red Flags Section (Warnings) -->
+        <section class="mb-12">
+            <h2 class="text-xl font-bold text-warning mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                احذري من (Red Flags)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Warning 1 -->
+                <div class="bg-warningLight border-r-4 border-warning p-4 rounded-lg flex items-start gap-3">
+                    <i class="fa-solid fa-glass-water text-warning mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-navy text-sm mb-1">تمديد العصارات الهاضمة</h4>
+                        <p class="text-xs text-gray-700 leading-relaxed">تجنب شرب الماء أو العصائر الطازجة وسط الوجبة. (يفضل قبلها بـ 20 دقيقة أو بعدها بساعة).</p>
+                    </div>
+                </div>
+                <!-- Warning 2 -->
+                <div class="bg-warningLight border-r-4 border-warning p-4 rounded-lg flex items-start gap-3">
+                    <i class="fa-solid fa-chair text-warning mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-navy text-sm mb-1">الجلوس الطويل</h4>
+                        <p class="text-xs text-gray-700 leading-relaxed">تجنب الجلوس لفترات طويلة، وحاول الوقوف أو الحركة البسيطة أثناء الزيارات الاجتماعية.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Golden Tip (Positive Reinforcement) -->
+        <section class="mb-12">
+            <div class="bg-gradient-to-r from-teal to-[#3a8b84] text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                <div class="absolute -left-4 -top-4 opacity-20">
+                    <i class="fa-solid fa-lightbulb text-8xl"></i>
+                </div>
+                <div class="relative z-10 flex items-start gap-4">
+                    <div class="bg-white text-teal w-12 h-12 rounded-full flex items-center justify-center shrink-0 shadow-md">
+                        <i class="fa-solid fa-lightbulb text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl mb-2">نصيحة سريعة ومهمة</h3>
+                        <p class="text-tealLight leading-relaxed text-sm md:text-base font-medium">
+                            "إذا أفرطت في وجبة ما، لا تعاقب نفسك أبداً؛ فقط اجعل الوجبة التالية خفيفة جداً، أو عدّ الى الصيام المتقطع لمدة 14 ساعة "مثلاً من 8 مساءً - 10 صباحاً" لتعطي جهازك الهضمي فرصة للتنظيف وإعادة الضبط."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Patient Notes & Share to WhatsApp -->
+        <section class="mb-12 bg-white p-6 rounded-3xl shadow-lg border border-tealLight">
+            <h2 class="text-xl font-bold text-navy mb-4 flex items-center gap-2 border-b border-gray-100 pb-3">
+                <i class="fa-solid fa-clipboard-user text-teal"></i>
+                ملاحظات المريض والتقييم
+            </h2>
+            
+            <div class="mb-5">
+                <label for="patient-notes" class="block text-gray-700 text-sm font-bold mb-2">كيف شعرت اليوم؟ (مثال: شعرت بانتفاخ، طاقة ممتازة...)</label>
+                <textarea id="patient-notes" rows="3" class="w-full px-4 py-3 text-gray-700 bg-bgSoft border border-gray-200 rounded-xl focus:outline-none focus:border-teal focus:ring-1 focus:ring-teal resize-none transition-shadow shadow-inner" placeholder="اكتب ملاحظاتك هنا ليتم إرسالها للدكتورة دنيا..."></textarea>
+            </div>
+
+            <button onclick="sendWhatsApp()" class="btn-whatsapp w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-4 px-6 rounded-2xl shadow-lg flex items-center justify-center gap-3 transition-colors text-lg">
+                <i class="fa-brands fa-whatsapp text-3xl"></i>
+                إرسال النتيجة للعيادة
+            </button>
+            <p class="text-center text-xs text-gray-400 mt-3"><i class="fa-solid fa-lock mr-1"></i> معلوماتك تُرسل بأمان عبر واتساب إلى رقم السكرتارية المعتمد.</p>
+        </section>
+
+    </main>
+
+    <!-- Footer / Conclusion -->
+    <footer class="bg-white border-t border-gray-200 mt-12 py-12 px-6">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="mb-6">
+                <p class="text-navy text-lg font-medium leading-relaxed mb-6">
+                    الوصول للصحة المثالية ليس مجرد وصفة سريعة، بل هو "رحلة" متكاملة. استمتع بعيدك، تواصلوا مع أحبائكم، واجعل من هذه العادات البسيطة درعاً لحمايتك والحفاظ على إشراقتك.
+                </p>
+            </div>
+            
+            <div class="inline-block text-center border-t border-gray-100 pt-6">
+                <h4 class="font-bold text-navy text-xl mb-1 font-sans" dir="ltr">Dr: Donia Ahmed Al-Motwekel</h4>
+                <p class="text-teal text-sm font-medium font-sans tracking-wide uppercase" dir="ltr">
+                    Clinical Nutritionist & Functional Medicine Specialist
+                </p>
+                <div class="mt-4 text-gray-400 text-xs tracking-widest font-sans" dir="ltr">
+                    JOURNEY OF CURE
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Progress Bar Interactivity -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // --- Premium Interactive Features ---
+
+            const waterGlasses = document.querySelectorAll('.water-glass');
+            const waterCountText = document.getElementById('water-count-text');
+            const walkCheckbox = document.getElementById('walk-checkbox');
+            const patientNotes = document.getElementById('patient-notes');
+            
+            // 1. Load Data from LocalStorage
+            function loadData() {
+                // Tasks
+                checkboxes.forEach((box, index) => {
+                    const isChecked = localStorage.getItem(`task_${index}`) === 'true';
+                    box.checked = isChecked;
+                });
+                
+                // Water
+                const savedWater = parseInt(localStorage.getItem('water_count')) || 0;
+                updateWaterUI(savedWater);
+                
+                // Walk
+                walkCheckbox.checked = localStorage.getItem('walk_done') === 'true';
+                
+                // Notes
+                patientNotes.value = localStorage.getItem('patient_notes') || '';
+                
+                updateProgress();
+            }
+
+            // 2. Save Data & Update Progress dynamically
+            function updateProgress() {
+                // Calculate Checkboxes
+                const totalTasks = checkboxes.length;
+                const checkedTasks = document.querySelectorAll('.task-checkbox:checked').length;
+                
+                // Gamification Weighting: Tasks = 70%, Water = 15%, Walk = 15%
+                const taskPercent = (checkedTasks / totalTasks) * 70;
+                
+                const currentWater = document.querySelectorAll('.water-glass.filled').length;
+                const waterPercent = (currentWater / 8) * 15;
+                
+                const walkPercent = walkCheckbox.checked ? 15 : 0;
+                
+                const totalPercentage = Math.round(taskPercent + waterPercent + walkPercent);
+                
+                progressBar.style.width = `${totalPercentage}%`;
+                
+                // Gamification Colors
+                if(totalPercentage >= 100) {
+                    progressBar.style.backgroundColor = '#1e3046'; // Navy (Complete)
+                } else if (totalPercentage > 50) {
+                    progressBar.style.backgroundColor = '#51b2aa'; // Teal (Good progress)
+                } else {
+                    progressBar.style.backgroundColor = '#e07a5f'; // Warning (Just starting)
+                }
+                
+                // Save to LocalStorage
+                checkboxes.forEach((box, index) => {
+                    localStorage.setItem(`task_${index}`, box.checked);
+                });
+                localStorage.setItem('water_count', currentWater);
+                localStorage.setItem('walk_done', walkCheckbox.checked);
+            }
+
+            // 3. Water Tracker Logic
+            function updateWaterUI(count) {
+                waterGlasses.forEach((glass, index) => {
+                    if(index < count) {
+                        glass.classList.add('filled');
+                        glass.classList.remove('text-gray-300');
+                    } else {
+                        glass.classList.remove('filled');
+                        glass.classList.add('text-gray-300');
+                    }
+                });
+                waterCountText.innerText = `${count}/8`;
+            }
+
+            waterGlasses.forEach((glass, index) => {
+                glass.addEventListener('click', () => {
+                    const currentFilled = document.querySelectorAll('.water-glass.filled').length;
+                    let newCount = index + 1;
+                    
+                    // Allow unchecking the last clicked glass
+                    if (currentFilled === newCount) {
+                        newCount--; 
+                    }
+                    
+                    updateWaterUI(newCount);
+                    updateProgress();
+                });
+            });
+
+            // 4. Listeners
+            checkboxes.forEach(box => {
+                box.addEventListener('change', updateProgress);
+            });
+            walkCheckbox.addEventListener('change', updateProgress);
+            patientNotes.addEventListener('input', () => {
+                localStorage.setItem('patient_notes', patientNotes.value);
+            });
+
+            // 5. Add Entrance Animations to Sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach((sec, idx) => {
+                sec.classList.add('animate-slide-up');
+                sec.style.animationDelay = `${idx * 0.12}s`;
+            });
+
+            // Initialize app
+            loadData();
+        });
+
+        // 6. WhatsApp Share Function
+        window.sendWhatsApp = function() {
+            const phone = "967773798294";
+            const progress = document.getElementById('progress-bar').style.width || "0%";
+            const waterCount = document.querySelectorAll('.water-glass.filled').length;
+            const walkDone = document.getElementById('walk-checkbox').checked ? "تم إنجاز المشي ✅" : "لم يتم ❌";
+            const notes = document.getElementById('patient-notes').value || "لا توجد ملاحظات.";
+
+            let checkedTasksText = "";
+            document.querySelectorAll('.task-checkbox:checked').forEach(box => {
+                const title = box.nextElementSibling.querySelector('h3').innerText;
+                checkedTasksText += `\n- ${title}`;
+            });
+
+            const msg = `مرحباً د. دنيا 🌿\nأشارككِ تقريري اليومي "عيدك بصحة واتزان":\n\n` +
+                        `📊 نسبة الإنجاز العام: ${progress}\n` +
+                        `💧 شرب الماء: ${waterCount}/8 أكواب\n` +
+                        `🚶 المشي بعد الوجبة: ${walkDone}\n\n` +
+                        `✅ المهام المنجزة:${checkedTasksText ? checkedTasksText : '\n(لم يتم إنجاز مهام بعد)'}\n\n` +
+                        `📝 ملاحظاتي اليومية:\n${notes}`;
+
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        };
+    </script>
+</body>
+</html>
